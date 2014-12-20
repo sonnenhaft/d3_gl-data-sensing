@@ -1,0 +1,9 @@
+<span ng-repeat="sensor in sensors">
+    <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>
+</span>
+<div>
+    <button ng-click="randomize()">randomize</button>
+    <span ng-repeat="sensor in sensors" style="color:white">
+        {{sensor.angle}}
+    </span>
+</div>

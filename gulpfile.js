@@ -1,6 +1,5 @@
 var gulp = require('gulp');
-var  connect = require('gulp-connect');
-var jshint = require('gulp-jshint');
+
 var usemin = require('gulp-usemin');
 var uglify = require('gulp-uglify');
 var minifyHtml = require('gulp-minify-html');
@@ -8,14 +7,7 @@ var minifyCss = require('gulp-minify-css');
 var rev = require('gulp-rev');
 var ngAnnotate = require('gulp-ng-annotate');
 var inject = require('gulp-inject');
-var templateCache = require('gulp-angular-templatecache');
-var clean = require('gulp-clean');
-var less = require('gulp-less');
-var sourcemaps = require('gulp-sourcemaps');
-var LessPluginAutoPrefix = require('less-plugin-autoprefix');
-var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
-
-gulp.task('usemin', ['html', 'compile-less', 'copy-less-maps'], function () {
+gulp.task('usemin', ['html', 'compile-less'], function () {
     return gulp.src('index.html')
         .pipe(inject(gulp.src('.tmp/templates.js', {read: false}),
             {starttag: '<!-- inject:.tmp/templates:js -->'}
@@ -28,10 +20,7 @@ gulp.task('usemin', ['html', 'compile-less', 'copy-less-maps'], function () {
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('copy-less-maps', [ 'compile-less'], function () {
-    gulp.src('sensors-app/maps/**').pipe(gulp.dest('build/maps'));
-});
-
+var templateCache = require('gulp-angular-templatecache');
 gulp.task('html', ['clean'], function () {
     return gulp.src('sensors-app/**/*.html')
         .pipe(templateCache({
@@ -41,6 +30,7 @@ gulp.task('html', ['clean'], function () {
         .pipe(gulp.dest('.tmp'));
 });
 
+var clean = require('gulp-clean');
 gulp.task('clean', function () {
     return gulp.src(['.tmp/*', 'build/*']).pipe(clean());
 });
@@ -49,20 +39,24 @@ gulp.task('remove .tmp', ['usemin'], function () {
     return gulp.src('.tmp').pipe(clean());
 });
 
-gulp.task('clean-less', function () {
-    return gulp.src([
-        'sensors-app/**/*.css',
-        'sensors-app/**/*.map',
-        'sensors-app/maps'
-    ]).pipe(clean());
-});
-
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
+var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 gulp.task('less', ['clean-less'], function () {
     return gulp.src('sensors-app/**/*.less')
         .pipe(sourcemaps.init())
         .pipe(less({plugins: [autoprefix]}))
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('sensors-app'));
+});
+
+gulp.task('clean-less', function () {
+    return gulp.src([
+        'sensors-app/**/*.css',
+        'sensors-app/**/*.map',
+        'sensors-app/maps'
+    ]).pipe(clean());
 });
 
 gulp.task('watch', function () {
@@ -81,6 +75,7 @@ gulp.task('watch', function () {
     });
 });
 
+var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 gulp.task('lint', function() {
     return gulp.src(['sensors-app/**/*.js', 'gulpfile.js'])
@@ -88,10 +83,9 @@ gulp.task('lint', function() {
 });
 
 gulp.task('compile-less', ['clean-less', 'less']);
+gulp.task('build', ['clean', 'compile-less', 'html', 'usemin', 'remove .tmp']);
 
-gulp.task('build', ['clean', 'compile-less', 'html', 'usemin', 'remove .tmp', 'copy-less-maps']);
-
-
+var  connect = require('gulp-connect');
 gulp.task('connect', function() {
     return connect.server({
         middleware: function(connect, o) {
@@ -105,3 +99,5 @@ gulp.task('connect', function() {
         }
     });
 });
+
+gulp.task('dev-server', ['connect', 'watch']);

@@ -57,16 +57,12 @@ angular.module('circle-sensor', [
 
             var circle = d3svg.select('circle').attr('angle', -45);
 
-            function startAnimation(angle) {
+            $scope.$watch('angle',  function(angle) {
                 var angleRadians = angle * Math.PI * 2 / 360;
                 d3svg.transition().ease('linear').duration(1500).each(function () {
                     path.transition().call(arcTween, angleRadians);
                     circle.datum(angle).transition().attrTween('transform', rotateFn);
                 });
-            }
-
-            $scope.$watch('angle', function (angle) {
-                startAnimation(angle);
             });
         }
     };

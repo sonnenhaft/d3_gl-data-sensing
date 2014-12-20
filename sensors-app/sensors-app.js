@@ -5,6 +5,8 @@ angular.module('sensors-app', [
         {time: '4:30AM', angle: 0, label: ''},
         {time: '7:30PM', angle: 45, label: 'Peak Usage'},
         {time: '7:30AM', angle: 90, label: 'Normal Usage'},
+        {time: '2:30PM', angle: 135, label: 'Low Usage'},
+        {time: '2:30PM', angle: 135, label: 'Low Usage'},
         {time: '2:30PM', angle: 135, label: 'Low Usage'}
     ];
 

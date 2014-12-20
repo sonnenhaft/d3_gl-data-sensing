@@ -3,43 +3,19 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>sensor</title>
-<<<<<<< HEAD
     <!-- build:css styles.css -->
-    <link rel="stylesheet" href="sensors-app/base.css"/>
-    <link rel="stylesheet" href="sensors-app/circle-sensor/sensor.css"/>
+        <link rel="stylesheet" href="sensors-app/base.css"/>
+        <link rel="stylesheet" href="sensors-app/circle-sensor/sensor.css"/>
     <!-- endbuild -->
-
-    <!-- build:js libs.js -->
+    <!-- build:js app.js -->
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/angular/angular.js"></script>
-    <!-- endbuild -->
 
-    <!-- build:js app.js -->
         <script src="sensors-app/sensors-app.js"></script>
         <script src="sensors-app/d3js.js"></script>
         <script src="sensors-app/circle-sensor/circle-sensor.js"></script>
-    <!-- inject:.tmp/templates:js --><!-- endinject -->
+        <!-- inject:.tmp/templates:js --><!-- endinject -->
     <!-- endbuild -->
-=======
-    <link rel="stylesheet" href="css.css"/>
-
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-
-    <script src="sensors-app/sensors-app.js"></script>
-    <script src="sensors-app/d3js.js"></script>
-    <script src="sensors-app/circle-sensor/circle-sensor.js"></script>
->>>>>>> 6da1af0... Initial commit with sensors.
 </head>
-<body>
-<span ng-repeat="sensor in sensors">
-    <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"></circle-sensor>
-</span>
-<div>
-<button ng-click="randomize()">randomize</button>
-<span ng-repeat="sensor in sensors" style="color:white">
-    {{sensor.angle}}
-</span>
-</div>
-</body>
+<body ng-include="'sensors-app/sensors-app.html'"></body>
 </html>
