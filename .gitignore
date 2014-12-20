@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+## folders
+.tmp
+.idea
+build
+node_modules
+sensors-app/maps
+bower_components
+## files
+*.log
+*.css
+=======
+.idea
+bower_components
+npm-debug.log
+>>>>>>> 6da1af0... Initial commit with sensors.
