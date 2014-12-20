@@ -1,7 +1,7 @@
 {
     "name": "gl-data-sensors",
-    "version": "0.0.1",
-    "description": "* install node js\r * npm install -g bower\r * bower install",
+    "version": "0.0.6",
+    "description": "GL DataSensors",
     "main": "gulpfile.js",
     "dependencies": {
         "gulp": "~3.8.10",
@@ -24,14 +24,21 @@
         "proxy-middleware": "~0.9.0",
         "url": "~0.10.1"
     },
-
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "repository": {
         "type": "git",
         "url": "https://sonnanhaft@bitbucket.org/sonnanhaft/gl-data-sensing.git"
     },
-    "author": "",
-    "license": "MIT"
+    "license": "MIT",
+    "private": true,
+    "authors": [
+        "Vladimir Shein <vladimir.sonnenhaft@gmail.com>"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "d3",
+        "AngularJS",
+        "Sensors"
+    ]
 }

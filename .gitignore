@@ -3,7 +3,7 @@
 .idea
 build
 node_modules
-sensors-app/maps
+src/maps
 bower_components
 ## files
 *.log

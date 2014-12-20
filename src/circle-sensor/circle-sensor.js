@@ -42,7 +42,7 @@ angular.module('circle-sensor', [
             time: '@'
         },
         transclude: true,
-        templateUrl: 'sensors-app/circle-sensor/circle-sensor.html',
+        templateUrl: 'src/circle-sensor/circle-sensor.html',
         link: function ($scope, $element) {
             var d3svg = d3.selectAll($element).select('svg');
             d3svg.select('path.blue-circle').attr('d', ARC_FN({
