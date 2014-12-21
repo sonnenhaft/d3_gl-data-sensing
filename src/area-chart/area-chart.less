@@ -1,0 +1,35 @@
+.area-chart {
+    .y-axis, .x-axis {
+        path {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        line {
+            stroke-width: 0;
+        }
+    }
+    text {
+        fill: #fff
+    }
+
+    .y-axis {
+        path {
+            stroke-width: 0;
+        }
+        line {
+            stroke-width: 1;
+            stroke: #fff;
+            opacity: 0.5;
+        }
+    }
+
+    .grid .tick {
+        stroke: #fff;
+        shape-rendering: crispEdges;
+    }
+    .grid path {
+        stroke-width: 0;
+    }
+}

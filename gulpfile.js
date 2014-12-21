@@ -73,6 +73,7 @@ gulp.task('watch', function () {
         if (path.indexOf('less') === -1 || file.type !== 'changed') {
             return;
         }
+        console.log('changed: ' + path);
         var folder = path.slice(0, path.lastIndexOf('\\'));
         gulp.src(path)
             .pipe(sourcemaps.init())

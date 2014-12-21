@@ -4,64 +4,55 @@ angular.module('circle-sensor', [
     var DEFAULT_ARC_ANGLE = Math.PI / 2;
     var OUTER_RADIUS = 50;
     var INNER_RADIUS = OUTER_RADIUS - 6;
-    var ARC_FN = d3.svg.arc()
+
+    var arcFn = d3.svg.arc()
         .innerRadius(INNER_RADIUS)
         .outerRadius(OUTER_RADIUS);
 
-    function arcTween(transition, startAngle) {
+    function rotateArc(transition, startAngle) {
         transition.attrTween('d', function (d) {
             var i = d3.interpolate(d.startAngle, startAngle);
             return function (t) {
                 d.startAngle = i(t);
                 d.endAngle = d.startAngle + DEFAULT_ARC_ANGLE;
-                return ARC_FN(d);
+                return arcFn(d);
             };
         });
     }
 
-    //function textTween(d) {
-    //    var i = d3.interpolateRound(this.textContent - 0, d);
-    //    return function (t) {this.textContent = i(t);};
-    //}
-
-    function rotateFn(angle) {
+    function rotateOnAngle(angle) {
         var elem = d3.select(this);
-        var prevAngle = elem.attr('angle') - 0;
-        var i = d3.interpolate(prevAngle, angle - 45);
+        var i = d3.interpolate(elem.attr('angle') - 0, angle - 45);
         elem.attr('angle', angle - 45);
         return function (t) {
-            return 'rotate(' + i(t) + ',0,50)';
+            return 'rotate(' + i(t) + ',0,'+ OUTER_RADIUS +')';
         };
     }
 
     return {
-        scope: {
-            angle: '=?',
-            text: '=?',
-            label: '@',
-            time: '@'
-        },
         transclude: true,
+        scope: {angle: '=?', label: '@', time: '@'},
         templateUrl: 'src/circle-sensor/circle-sensor.html',
         link: function ($scope, $element) {
             var d3svg = d3.selectAll($element).select('svg');
-            d3svg.select('path.blue-circle').attr('d', ARC_FN({
+            var $ = d3svg.select.bind(d3svg);
+
+            $('path.blue-circle').attr('d', arcFn({
                 endAngle: Math.PI * 2,
                 startAngle: 0
             }));
 
-            var path = d3svg.select('path.grey-circle').datum({
+            var whiteDot = $('circle').attr('angle', -45);
+            var circle = $('path.grey-circle').datum({
                 startAngle: 0,
                 endAngle: DEFAULT_ARC_ANGLE
-            }).attr('d', ARC_FN);
+            }).attr('d', arcFn);
 
-            var circle = d3svg.select('circle').attr('angle', -45);
-
-            $scope.$watch('angle',  function(angle) {
+            $scope.$watch('angle', function (angle) {
                 var angleRadians = angle * Math.PI * 2 / 360;
                 d3svg.transition().ease('linear').duration(1500).each(function () {
-                    path.transition().call(arcTween, angleRadians);
-                    circle.datum(angle).transition().attrTween('transform', rotateFn);
+                    whiteDot.datum(angle).transition().attrTween('transform', rotateOnAngle);
+                    circle.transition().call(rotateArc, angleRadians);
                 });
             });
         }

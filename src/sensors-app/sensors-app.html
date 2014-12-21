@@ -1,9 +1,25 @@
-<span ng-repeat="sensor in sensors">
-    <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>
-</span>
-<div>
-    <button ng-click="randomize()">randomize</button>
-    <span ng-repeat="sensor in sensors" style="color:white">
-        {{sensor.angle}}
-    </span>
+<div class="row">
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>
+    </div>
+    <div class="col-md-12 text-center">
+        <button ng-click="randomize()" class="btn btn-info btn-xs">randomize</button>
+    </div>
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <span style="color: white">{{sensor.angle}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <area-chart values="areaChart"></area-chart>
+    </div>
+    <div class="col-md-4">
+        <area-chart values="areaChart"></area-chart>
+    </div>
+    <div class="col-md-4">
+        <area-chart values="areaChart"></area-chart>
+    </div>
+    <div class="col-md-12">
+        <button ng-click="randomizeArea()" class="btn btn-info btn-xs">randomize area chart</button>
+    </div>
 </div>

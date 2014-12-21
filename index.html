@@ -16,11 +16,13 @@
     <!-- build:css styles.css -->
         <link rel="stylesheet" href="src/sensors-app/sensors-app.css"/>
         <link rel="stylesheet" href="src/circle-sensor/circle-sensor.css"/>
+        <link rel="stylesheet" href="src/area-chart/area-chart.css"/>
     <!-- endbuild -->
     <!-- build:js app.js -->
         <script src="src/sensors-app/sensors-app.js"></script>
         <script src="src/3rd-party-libs.js"></script>
         <script src="src/circle-sensor/circle-sensor.js"></script>
+        <script src="src/area-chart/area-chart.js"></script>
         <!-- inject:.tmp/templates:js --><!-- endinject -->
     <!-- endbuild -->
     <!-- process:remove -->
@@ -28,13 +30,19 @@
     <!-- /process -->
 </head>
 <body>
-<div ng-include="'src/sensors-app/sensors-app.html'"></div>
-<div class="version">
-    GL Data Sensors
-    <dev-version></dev-version>
-    <!-- process:template
-     v<%= version %>
-    /process -->
+<br/>
+<div class="container-fluid">
+    <div class="row">
+        <div ng-include="'src/sensors-app/sensors-app.html'"></div>
+        <div class="version">
+            GL Data Sensors
+            <dev-version></dev-version>
+            <!-- process:template
+             v<%= version %>
+            /process -->
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
