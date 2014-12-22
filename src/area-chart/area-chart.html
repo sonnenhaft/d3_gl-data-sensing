@@ -1,10 +1,10 @@
 <svg ng-attr-width="{{width}}" height="250" class="area-chart">
-    <rect fill="#18a1d2" ng-attr-width="{{width}}" height="250" opacity="0.5"></rect>
-    <g ng-attr-transform="translate({{padding}},{{padding}})">
-        <path class="transparent-area" opacity="0.5" fill="white"></path>
-        <path class="chart-line" stroke="white" fill="none" stroke-width="2"></path>
+    <!--<rect fill="#18a1d2" ng-attr-width="{{width}}" height="250" ng-attr-opacity="{{axisOutline ? 0.65 : 0.75}}"></rect>-->
+    <g ng-attr-transform="translate({{leftPadding}},{{paddingTop}})">
+        <path class="transparent-area" opacity="0.5" fill="white" stroke-width="0"></path>
+        <path class="transparent-area-border" fill="none" stroke-width="2" stroke="white"></path>
         <g class="white-dots"></g>
         <g class="y-axis"></g>
-        <g class="x-axis"></g>
+        <g class="x-axis" ng-attr-transform="translate(0,{{height}})"></g>
     </g>
 </svg>

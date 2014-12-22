@@ -1,80 +1,89 @@
 angular.module('area-chart', [
     '3rd-party-libs'
 ]).directive('areaChart', function (d3, $window) {
+
+    function getWidth($element) {
+        return $element.parent().prop('clientWidth');
+    }
+
     return {
         transclude: true,
-        scope: {values: '=?'},
+        scope: {values: '=?', axisOutline: '=?'},
         templateUrl: 'src/area-chart/area-chart.html',
         link: function ($scope, $element) {
             var d3svg = d3.selectAll($element).select('svg');
             var $ = d3svg.select.bind(d3svg);
-            $scope.$watch('values', function (data) {
-                paintChart(data, $element.parent().prop('clientWidth'));
-            }, true);
+            var isOutlineAxis = !$scope.axisOutline;
 
-            var height = d3svg.attr('height') - 30;
-            $scope.padding = 2;
+
+
+            $scope.$watch('values', function (data) {
+                paintChart(data, getWidth($element));
+            }, true);
 
             angular.element($window).bind('resize', function () {
                 if ($scope.values) {
-                    paintChart($scope.values, $element.parent().prop('clientWidth'), true);
+                    paintChart($scope.values, getWidth($element), true);
                     $scope.$digest();
                 }
             });
 
+            var rightPadding;
+            $scope.paddingTop = 18;
+            var paddingBottom = 25;
+
+            if (isOutlineAxis) {
+                rightPadding = 2;
+                $scope.leftPadding = rightPadding;
+            } else {
+                rightPadding = 12;
+                $scope.leftPadding = rightPadding * 3;
+            }
+
+
+            var height = d3svg.attr('height') - $scope.paddingTop - paddingBottom;
+            $scope.height = height;
 
             function paintChart(data, width, disableAnimation) {
                 $scope.width = width;
-                width = width - $scope.padding * 2;
+                width = width - rightPadding - $scope.leftPadding;
                 var values = d3.values(data);
-                var keys = d3.keys(data);
+                var maxKeyVal = 100;
+                var yScale = d3.scale.linear().domain([d3.max(values) * 1.2, 0]).range([0, height]);
+                var xScale = d3.scale.linear().domain([0, maxKeyVal]).range([0, width]);
 
-                var maxValue = d3.max(values);
-
-                var xScale = d3.scale.ordinal().domain(keys).rangePoints([0, width]);
-                var yScale = d3.scale.linear().domain([maxValue * 1.1, 0]).range([0, height]);
-                var maxVal = 100;
-                var xScale1 = d3.scale.linear().domain([0, maxVal]).range([0, width]);
-
-                function x(ignored, index) {
-                    return index * width / (values.length - 1);
+                var xAxis = d3.svg.axis().scale(xScale).ticks(values.length * 1.5).tickSize(5, -height);
+                if (isOutlineAxis) {
+                    xAxis.tickSize(5, 0).tickFormat(function (d, i) {
+                        return d == maxKeyVal || i == 0 ? '' : d;
+                    });
                 }
-
-                function x1(ignored, index) {
-                    return x(ignored, index + 1);
-                }
-
-                function y(item) {
-                    return yScale(item);
-                }
+                var yAxis = d3.svg.axis().scale(yScale).ticks(6).orient('left').tickSize(-width, 0, 0);
 
                 d3svg.transition().ease('linear').duration(disableAnimation ? 0 : 750).each(function () {
-                    var xAxis = d3.svg.axis().scale(xScale).tickFormat(function (d, i) {
-                        return i == keys.length - 1 || i == 0 ? '' : d;
-                    });
-                    var xAxis1 = d3.svg.axis().scale(xScale1).ticks(values.length * 1.5).tickFormat(function (d, i) {
-                        return d == maxVal || i == 0 ? '' : d;
-                    }).tickSize(5, 0);
-                    //$('g.x-axis').call(xAxis).attr({transform: 'translate(0,' + height + ')'});
-                    $('g.x-axis').call(xAxis1).attr({transform: 'translate(0,' + height + ')'});
+                    var xPath = $('g.x-axis').transition().call(xAxis).select('path');
+                    var yText = $('g.y-axis').transition().call(yAxis).selectAll("text").tween("attr.x", null).attr({x: -8});
 
-                    var yAxis = d3.svg.axis().scale(yScale).ticks(8).orient('left').tickSize(-width, 0, 0);
+                    function y(item) {return yScale(item);}
+                    function x(ignored, index) {return index * width / (values.length - 1);}
+                    var pathArea = d3.svg.area().x(x).y0(height).y1(y)(values);
 
-                    $('g.y-axis').transition().call(yAxis).selectAll("text")
-                        .tween("attr.x", null)
-                        .attr({y: -10, x: 20, style: 'text-anchor:middle'});
+                    $('path.transparent-area').transition().attr('d', pathArea);
 
-                    var area = d3.svg.area()
-                        .x(x).y0(height).y1(y);
-                    $('path.transparent-area').transition().attr('d', area(values));
+                    var dotX = x;
+                    var dotValues = values;
+                    if (isOutlineAxis) {
+                        xPath.select('path').attr({opacity: 0.5});
+                        yText.attr({y: -10, x: 20, style: 'text-anchor:middle'});
+                        pathArea = d3.svg.line().x(x).y(y)(values);
+                        dotValues = values.slice(1, values.length);
+                        dotValues.pop();
+                        dotX = function xPlusOne(ignored, index) {return x(ignored, index + 1);};
+                    }
 
-                    var lineFunction = d3.svg.line().x(x).y(y);
-                    $('path.chart-line').transition().attr('d', lineFunction(values));
-
-                    var vals = values.slice(1, values.length);
-                    vals.pop();
-                    $('g.white-dots').drtEnter(vals, 'circle', {r: 6, cx: x1, fill: 'white'})
-                        .transition().attr({cx: x1, cy: y});
+                    $('path.transparent-area-border').transition().attr('d', pathArea);
+                    $('g.white-dots').drtEnter(dotValues, 'circle', {r: 6, cx: dotX, fill: 'white'})
+                        .transition().attr({cx: dotX, cy: y});
                 });
             }
         }

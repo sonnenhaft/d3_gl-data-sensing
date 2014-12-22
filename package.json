@@ -40,5 +40,8 @@
     "d3",
     "AngularJS",
     "Sensors"
-  ]
+  ],
+  "devDependencies": {
+    "gulp-processhtml": "^1.0.2"
+  }
 }
