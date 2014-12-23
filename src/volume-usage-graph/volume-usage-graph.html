@@ -1,0 +1,29 @@
+<svg width="1650" height="250" class="area-chart">
+    <g ng-attr-transform="translate(0,{{paddingTop}})">
+
+        <rect  width="450" height="500"   x="0" fill="url(#gradient)" clip-path="url(#cut-off-bottom)"></rect>
+
+
+        <defs>
+            <clipPath id="cut-off-bottom">
+                <rect  width="350" height="25"   x="50" rx="10" ry="10"></rect>
+                <rect  width="450" height="25"   x="0" y="27" rx="10" ry="10"></rect>
+                <rect  width="430" height="25"   x="10" y="54" rx="10" ry="10"></rect>
+                <rect  width="400" height="25"   x="25" y="81" rx="10" ry="10"></rect>
+            </clipPath>
+        </defs>
+
+        <defs>
+            <linearGradient id="gradient" x1="0" y1="0 " x2="100%" y2="0" spreadMethod="pad">
+                <stop offset="0%" stop-color="#EA3300" stop-opacity="1"></stop>
+                <stop offset="15%" stop-color="#F1CF00" stop-opacity="1"></stop>
+                <stop offset="35%" stop-color="#7DD1BB" stop-opacity="1"></stop>
+                <stop offset="50%" stop-color="#3AD1FF" stop-opacity="1"></stop>
+                <stop offset="65%" stop-color="#3AD1FF" stop-opacity="1"></stop>
+                <stop offset="70%" stop-color="#7DD1BB" stop-opacity="1"></stop>
+                <stop offset="85%" stop-color="#F1CF00" stop-opacity="1"></stop>
+                <stop offset="100%" stop-color="#EA3300" stop-opacity="1"></stop>
+            </linearGradient>
+        </defs>
+    </g>
+</svg>
