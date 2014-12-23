@@ -1,29 +1,33 @@
-<svg width="1650" height="250" class="area-chart">
-    <g ng-attr-transform="translate(0,{{paddingTop}})">
+<svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" class="area-chart" ng-init="lineHeight = 25; height=150;  textWidth = 60">
+    <g ng-attr-transform="translate(0,{{(height - (lineHeight+1)*(values.length + 0.5))/2}})">
+        <g class="rects">
+            <g ng-attr-transform="translate({{textWidth}},8)">
+                <rect x="0"
+                      ng-attr-width="{{width - textWidth}}"
+                      clip-path="url(#rectangles-clip{{id}})"
+                      fill="url(#gradient)"
+                      ng-attr-height="{{(lineHeight+1)*(values.length)}}"></rect>
 
-        <rect  width="450" height="500"   x="0" fill="url(#gradient)" clip-path="url(#cut-off-bottom)"></rect>
-
-
+                <line fill="white" x1="0" stroke="white" stroke-width="1" opacity="0.7"
+                      ng-repeat="w in values"
+                      ng-attr-x2="{{width - textWidth}}"
+                      ng-attr-y1="{{(lineHeight + 1)*$index}}"
+                      ng-attr-y2="{{(lineHeight + 1)*$index}}"></line>
+            </g>
+            <text fill="white" x="0" text-anchor="middle" fill-opacity="0.7"
+                  ng-repeat="w in values"
+                  ng-attr-y="{{(lineHeight + 1)*$index}}"
+                  ng-attr-dy="{{lineHeight}}"
+                  dx="28">
+                {{w}} PM
+            </text>
+        </g>
         <defs>
-            <clipPath id="cut-off-bottom">
-                <rect  width="350" height="25"   x="50" rx="10" ry="10"></rect>
-                <rect  width="450" height="25"   x="0" y="27" rx="10" ry="10"></rect>
-                <rect  width="430" height="25"   x="10" y="54" rx="10" ry="10"></rect>
-                <rect  width="400" height="25"   x="25" y="81" rx="10" ry="10"></rect>
-            </clipPath>
-        </defs>
-
-        <defs>
-            <linearGradient id="gradient" x1="0" y1="0 " x2="100%" y2="0" spreadMethod="pad">
-                <stop offset="0%" stop-color="#EA3300" stop-opacity="1"></stop>
-                <stop offset="15%" stop-color="#F1CF00" stop-opacity="1"></stop>
-                <stop offset="35%" stop-color="#7DD1BB" stop-opacity="1"></stop>
-                <stop offset="50%" stop-color="#3AD1FF" stop-opacity="1"></stop>
-                <stop offset="65%" stop-color="#3AD1FF" stop-opacity="1"></stop>
-                <stop offset="70%" stop-color="#7DD1BB" stop-opacity="1"></stop>
-                <stop offset="85%" stop-color="#F1CF00" stop-opacity="1"></stop>
-                <stop offset="100%" stop-color="#EA3300" stop-opacity="1"></stop>
-            </linearGradient>
+            <clipPath id="rectangles-clip{{id}}" class="rectsClip"></clipPath>
         </defs>
     </g>
 </svg>
+
+<div ng-include="'src/volume-usage-graph/temperature-gradient.html'"></div>
+
+<button ng-click="change()">change</button>

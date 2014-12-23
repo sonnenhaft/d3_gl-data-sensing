@@ -1,25 +1,36 @@
 <!--<div class="row">-->
-    <!--<div ng-repeat="sensor in sensors" class="col-md-2">-->
-        <!--<circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>-->
-    <!--</div>-->
-    <!--<div class="col-md-12 text-center">-->
-        <!--<button ng-click="randomize()" class="btn btn-info btn-xs">randomize</button>-->
-    <!--</div>-->
-    <!--<div ng-repeat="sensor in sensors" class="col-md-2">-->
-        <!--<span style="color: white">{{sensor.angle}}</span>-->
-    <!--</div>-->
+    <!--<volume-usage-graph values="valuesVolume"></volume-usage-graph>-->
 <!--</div>-->
+<div class="row">
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>
+    </div>
+    <div class="col-md-12 text-center">
+        <button ng-click="randomize()" class="btn btn-info btn-xs">randomize</button>
+    </div>
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <span style="color: white">{{sensor.angle}}</span>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <chart-background values="areaChart"></chart-background>
+</div>
+<div class="col-md-3">
+    <chart-background values="areaChart"></chart-background>
+</div>
+<div class="col-md-3">
+    <div class="row">
+        <volume-usage-graph values="valuesVolume"></volume-usage-graph>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="row">
+        <volume-usage-graph values="valuesVolume"></volume-usage-graph>
+    </div>
+</div>
 
 <div class="col-md-12">
-    <!--<chart-background values="areaChart"></chart-background>-->
-    <volume-usage-graph values="areaChart"></volume-usage-graph>
-</div>
-<!--<div class="col-md-4">-->
-    <!--<chart-background values="areaChart" axis-outline="true"></chart-background>-->
-<!--</div>-->
-<!--<div class="col-md-4">-->
-    <!--<chart-background values="areaChart"></chart-background>-->
-<!--</div>-->
-<div class="col-md-12">
     <button ng-click="randomizeArea()" class="btn btn-info btn-xs">randomize area chart</button>
+    <button ng-click="changeValues()" class="btn btn-info btn-xs">change volume usage chart</button>
 </div>
