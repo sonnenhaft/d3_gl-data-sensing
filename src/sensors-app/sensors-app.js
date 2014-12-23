@@ -30,6 +30,8 @@ angular.module('sensors-app', [
         'JUL 5': 100
     };
 
+    $rootScope.valuesVolume = [100,99,98,97,96,95,94,93,92,91,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10,5,3];
+
     $rootScope.sensors = sensors;
     $rootScope.areaChart = areaChart;
     $rootScope.randomize = function () {
@@ -41,6 +43,9 @@ angular.module('sensors-app', [
         angular.forEach(areaChart, function (item, key) {
             areaChart[key] = Math.round(Math.random() * 10) * 40;
         })
+    };
+    $rootScope.changeValues = function(){
+        $rootScope.valuesVolume = [1,2,3,4,5,6,7,8,9,10,11,12,13];
     };
     $rootScope.randomizeArea();
 });

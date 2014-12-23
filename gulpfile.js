@@ -53,9 +53,9 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 gulp.task('less', ['clean-less'], function () {
     return gulp.src('src/**/*.less')
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(less({plugins: [autoprefix]}))
-        .pipe(sourcemaps.write('./maps'))
+        //.pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('src'));
 });
 
@@ -76,9 +76,9 @@ gulp.task('watch', function () {
         console.log('changed: ' + path);
         var folder = path.slice(0, path.lastIndexOf('\\'));
         gulp.src(path)
-            .pipe(sourcemaps.init())
+            //.pipe(sourcemaps.init())
             .pipe(less({plugins: [autoprefix]}))
-            .pipe(sourcemaps.write('.'))
+            //.pipe(sourcemaps.write('.'))
             .pipe(gulp.dest(folder));
     });
 });
