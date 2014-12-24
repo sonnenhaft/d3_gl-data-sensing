@@ -1,5 +1,5 @@
 angular.module('sensors-app', [
-    'circle-sensor', 'area-chart', 'chart-background', 'volume-usage-graph'
+    'circle-sensor', 'area-chart', 'chart-background', 'volume-usage-graph','live-chart'
 ]).run(function ($rootScope) {
     var sensors = [
         {time: '4:30AM', angle: 0, label: ''},
@@ -11,14 +11,14 @@ angular.module('sensors-app', [
     ];
 
     var areaChart = {
-        //'JUN 5': 50,
-        //'JUN 10': 60,
-        //'JUN 15': 150,
-        //'JUN 20': 450,
-        //'JUN 21': 450,
-        //'JUN 22': 450,
-        //'JUN 23': 450,
-        //'JUN 24': 450,
+        'JUN 5': 50,
+        'JUN 10': 60,
+        'JUN 15': 150,
+        'JUN 20': 450,
+        'JUN 21': 450,
+        'JUN 22': 450,
+        'JUN 23': 450,
+        'JUN 24': 450,
         'JUN 26': 450,
         'JUN 27': 450,
         'JUN 25': 200,
@@ -27,6 +27,16 @@ angular.module('sensors-app', [
         'JUN 32': 190,
         'JUN 33': 190,
         'JUN 34': 190,
+        'JUN 3d4': 190,
+        'JUN 3dv4': 190,
+        'JUN 3dvs4': 190,
+        'JUN 3dvss4': 190,
+        'JUN 3dvssa4': 190,
+        'JUN 3dvssas4': 190,
+        'JUN 3dvssase4': 190,
+        'JUN 3dvssasew4': 190,
+        'JUN 3dvssasewq4': 190,
+        'JUN 3dvssasewqq4': 190,
         'JUL 5': 100
     };
 
@@ -42,7 +52,7 @@ angular.module('sensors-app', [
     $rootScope.randomizeArea = function () {
         angular.forEach(areaChart, function (item, key) {
             areaChart[key] = Math.round(Math.random() * 10) * 40;
-        })
+        });
     };
     $rootScope.changeValues = function(){
         $rootScope.valuesVolume = [1,2,3,4,5,6,7,8,9,10,11,12,13];

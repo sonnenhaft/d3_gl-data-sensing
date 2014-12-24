@@ -6,6 +6,8 @@ angular.module('area-chart', [
         return $element.parent().prop('clientWidth');
     }
 
+    var PADDING_BOTTOM = 25;
+
     return {
         transclude: true,
         scope: {values: '=?', axisOutline: '=?'},
@@ -29,8 +31,8 @@ angular.module('area-chart', [
             });
 
             var rightPadding;
-            $scope.paddingTop = 18;
-            var paddingBottom = 25;
+            $scope.PADDING_TOP = 18;
+            
 
             if (isOutlineAxis) {
                 rightPadding = 2;
@@ -41,7 +43,7 @@ angular.module('area-chart', [
             }
 
 
-            var height = d3svg.attr('height') - $scope.paddingTop - paddingBottom;
+            var height = d3svg.attr('height') - $scope.PADDING_TOP - PADDING_BOTTOM;
             $scope.height = height;
 
             function paintChart(data, width, disableAnimation) {
@@ -55,14 +57,14 @@ angular.module('area-chart', [
                 var xAxis = d3.svg.axis().scale(xScale).ticks(values.length * 1.5).tickSize(5, -height);
                 if (isOutlineAxis) {
                     xAxis.tickSize(5, 0).tickFormat(function (d, i) {
-                        return d == maxKeyVal || i == 0 ? '' : d;
+                        return d === maxKeyVal || i === 0 ? '' : d;
                     });
                 }
-                var yAxis = d3.svg.axis().scale(yScale).ticks(6).orient('left').tickSize(-width, 0, 0);
+                var yAxis = d3.svg.axis().scale(yScale).ticks(6).orient('left').tickSize(-width, 0, 0).tickPadding(8);
 
-                d3svg.transition().ease('linear').duration(disableAnimation ? 0 : 750).each(function () {
+                d3svg.linearTransition(disableAnimation ? 0 : 750, function () {
                     var xPath = $('g.x-axis').transition().call(xAxis).select('path');
-                    var yText = $('g.y-axis').transition().call(yAxis).selectAll("text").tween("attr.x", null).attr({x: -8});
+                    var yText = $('g.y-axis').transition().call(yAxis).selectAll('text');
 
                     function y(item) {return yScale(item);}
                     function x(ignored, index) {return index * width / (values.length - 1);}
@@ -74,7 +76,7 @@ angular.module('area-chart', [
                     var dotValues = values;
                     if (isOutlineAxis) {
                         xPath.select('path').attr({opacity: 0.5});
-                        yText.attr({y: -10, x: 20, style: 'text-anchor:middle'});
+                        yText.tween('attr.x', null).attr({y: -10, x: 20, style: 'text-anchor:middle'});
                         pathArea = d3.svg.line().x(x).y(y)(values);
                         dotValues = values.slice(1, values.length);
                         dotValues.pop();
