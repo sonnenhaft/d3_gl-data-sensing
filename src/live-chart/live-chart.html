@@ -1,0 +1,20 @@
+<svg ng-attr-width="{{width}}" height="250" class="live-chart">
+    <g ng-attr-transform="translate({{LEFT_PADDING}},{{PADDING_TOP}})">
+        <rect x="0"
+              ng-attr-width="{{pathWidth}}"
+              clip-path="url(#path-clip{{id}})"
+              fill="rgba(24, 161, 210, 0.75)"
+              height="250"></rect>
+        <g opacity="0.5" fill="0" stroke-width="2">
+            <g class="y-axis"></g>
+            <g class="x-axis" ng-attr-transform="translate(0,{{height}})"></g>
+        </g>
+    </g>
+
+    <defs>
+        <clipPath id="path-clip{{id}}">
+            <path class="transparent-area" opacity="0.5" stroke-width="0"></path>
+        </clipPath>
+    </defs>
+</svg>
+

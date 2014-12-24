@@ -5,6 +5,6 @@ angular.module('sensors-app').directive('devVersion', function($http){
                 $scope.version = ' v' + pkg.version;
             });
         },
-        template: "{{version}}"
-    }
+        template: '{{version}}'
+    };
 });
