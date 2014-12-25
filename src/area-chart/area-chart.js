@@ -1,11 +1,6 @@
 angular.module('area-chart', [
     '3rd-party-libs'
-]).directive('areaChart', function (d3, $window) {
-
-    function getWidth($element) {
-        return $element.parent().prop('clientWidth');
-    }
-
+]).directive('areaChart', function (d3, $window, d3WrapperService) {
     var PADDING_BOTTOM = 25;
 
     return {
@@ -13,19 +8,16 @@ angular.module('area-chart', [
         scope: {values: '=?', axisOutline: '=?'},
         templateUrl: 'src/area-chart/area-chart.html',
         link: function ($scope, $element) {
-            var d3svg = d3.selectAll($element).select('svg');
-            var $ = d3svg.select.bind(d3svg);
+            var $ = d3WrapperService.wrap($element);
             var isOutlineAxis = !$scope.axisOutline;
 
-
-
             $scope.$watch('values', function (data) {
-                paintChart(data, getWidth($element));
+                paintChart(data, $.parentWidth());
             }, true);
 
             angular.element($window).bind('resize', function () {
                 if ($scope.values) {
-                    paintChart($scope.values, getWidth($element), true);
+                    paintChart($scope.values, $.parentWidth(), true);
                     $scope.$digest();
                 }
             });
@@ -43,7 +35,7 @@ angular.module('area-chart', [
             }
 
 
-            var height = d3svg.attr('height') - $scope.PADDING_TOP - PADDING_BOTTOM;
+            var height = $.height() - $scope.PADDING_TOP - PADDING_BOTTOM;
             $scope.height = height;
 
             function paintChart(data, width, disableAnimation) {
@@ -62,7 +54,7 @@ angular.module('area-chart', [
                 }
                 var yAxis = d3.svg.axis().scale(yScale).ticks(6).orient('left').tickSize(-width, 0, 0).tickPadding(8);
 
-                d3svg.linearTransition(disableAnimation ? 0 : 750, function () {
+                $.linearTransition(disableAnimation ? 0 : 750, function () {
                     var xPath = $('g.x-axis').transition().call(xAxis).select('path');
                     var yText = $('g.y-axis').transition().call(yAxis).selectAll('text');
 

@@ -1,11 +1,6 @@
 angular.module('live-chart', [
     '3rd-party-libs'
-]).directive('liveChart', function (d3, $window, $interval) {
-
-    function getWidth($element) {
-        return $element.parent().prop('clientWidth');
-    }
-
+]).directive('liveChart', function (d3, $window, $interval, d3WrapperService) {
     var STACK_SIZE = 150;
     var DEFAULT_DATA = [];
     for (var i = 0; i < 25; i++) {
@@ -22,17 +17,17 @@ angular.module('live-chart', [
         scope: {values: '=?'},
         templateUrl: 'src/live-chart/live-chart.html',
         link: function ($scope, $element) {
+            var $ = d3WrapperService.wrap($element);
+
             $scope.id = id++;
-            var d3svg = d3.selectAll($element).select('svg');
-            var $ = d3svg.select.bind(d3svg);
 
             $scope.$watch('values', function (data) {
-                paintChart(data, getWidth($element));
+                paintChart(data, $.parentWidth());
             }, true);
 
             angular.element($window).bind('resize', function () {
                 if ($scope.values) {
-                    paintChart($scope.values, getWidth($element), true);
+                    paintChart($scope.values, $.parentWidth(), true);
                     $scope.$digest();
                 }
             });
@@ -40,8 +35,9 @@ angular.module('live-chart', [
             $scope.LEFT_PADDING = RIGHT_PADDING * 3;
             $scope.PADDING_TOP = 18;
 
-            var height = d3svg.attr('height') - $scope.PADDING_TOP - PADDING_BOTTOM;
+            var height = $.height()  - $scope.PADDING_TOP - PADDING_BOTTOM;
             $scope.height = height;
+            var interval;
 
             function paintChart(data, width, disableAnimation) {
                 data = DEFAULT_DATA;
@@ -62,14 +58,16 @@ angular.module('live-chart', [
                 var xAxis = d3.svg.axis().ticks(10).tickSize(-height, 0).tickPadding(8);
                 var yAxis = d3.svg.axis().ticks(6).orient('left').tickSize(-width, 0, 0).tickPadding(8);
                 var areaFn = d3.svg.area().y0(height).interpolate('basis');
+                if (interval) {
+                    $interval.cancel(interval);
+                }
+                interval = $interval(function () {renderLiveChart();}, 2 * DURATION);
 
-                $interval(function () {renderLiveChart();}, 2 * DURATION);
-
-                function renderLiveChart() {
+                function renderLiveChart(disableAnimation) {
                     data.push({y: Math.round(Math.random() * 400), x: data[data.length - 1].x + 1});
-                    d3svg.linearTransition(DURATION, function () {
+                    console.log(data[data.length - 1])
+                    $.linearTransition(disableAnimation ? 0 :DURATION, function () {
                         var toStack = STACK_SIZE < data.length;
-
                         var length = toStack ? STACK_SIZE : data.length;
 
                         function x(ignored, index) {return index * width / (length - 1);}
@@ -93,9 +91,8 @@ angular.module('live-chart', [
                     });
                 }
 
-                renderLiveChart();
+                renderLiveChart(disableAnimation);
             }
         }
     };
 });
-
