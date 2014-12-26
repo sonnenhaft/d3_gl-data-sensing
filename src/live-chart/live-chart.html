@@ -1,14 +1,14 @@
 <svg ng-attr-width="{{width}}" height="250" class="live-chart">
-    <g ng-attr-transform="translate({{LEFT_PADDING}},{{PADDING_TOP}})">
-        <rect x="0"
+    <g ng-attr-transform="translate({{LEFT_PADDING}},{{PADDING_TOP}})" class="mouse-over-area">
+        <rect x="0" fill="rgba(24, 161, 210, 0.75)" height="250"
               ng-attr-width="{{pathWidth}}"
-              clip-path="url(#path-clip{{id}})"
-              fill="rgba(24, 161, 210, 0.75)"
-              height="250"></rect>
+              clip-path="url(#path-clip{{id}})"></rect>
         <g opacity="0.5" fill="0" stroke-width="2">
             <g class="y-axis"></g>
             <g class="x-axis" ng-attr-transform="translate(0,{{height}})"></g>
         </g>
+
+        <chart-tooltip height="height" closest-dot="closestDot"></chart-tooltip>
     </g>
 
     <defs>

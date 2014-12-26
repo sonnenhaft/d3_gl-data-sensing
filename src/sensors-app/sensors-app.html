@@ -1,24 +1,22 @@
-<!--<div class="row">-->
-    <live-chart values="areaChart"></live-chart>
-<!--</div>-->
-<!--<div class="row">-->
-    <!--<div ng-repeat="sensor in sensors" class="col-md-2">-->
-        <!--<circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>-->
-    <!--</div>-->
-    <!--<div class="col-md-12 text-center">-->
-        <!--<button ng-click="randomize()" class="btn btn-info btn-xs">randomize</button>-->
-    <!--</div>-->
-    <!--<div ng-repeat="sensor in sensors" class="col-md-2">-->
-        <!--<span style="color: white">{{sensor.angle}}</span>-->
-    <!--</div>-->
-<!--</div>-->
+<live-chart values="areaChart"></live-chart>
+<div class="row">
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <circle-sensor angle="sensor.angle" label="{{sensor.label}}" time="{{sensor.time}}"/>
+    </div>
+    <div class="col-md-12 text-center">
+        <button ng-click="randomize()" class="btn btn-info btn-xs">randomize</button>
+    </div>
+    <div ng-repeat="sensor in sensors" class="col-md-2">
+        <span style="color: white">{{sensor.angle}}</span>
+    </div>
+</div>
 
-<!--<div class="col-md-3">-->
-    <!--<chart-background values="areaChart"></chart-background>-->
-<!--</div>-->
-<!--<div class="col-md-3">-->
-    <!--<chart-background values="areaChart"></chart-background>-->
-<!--</div>-->
+<div class="col-md-6">
+    <chart-background values="areaChart"></chart-background>
+</div>
+<div class="col-md-6">
+    <chart-background values="areaChart" axis-outline="true"></chart-background>
+</div>
 <!--<div class="col-md-3">-->
     <!--<div class="row">-->
         <!--<volume-usage-graph values="valuesVolume"></volume-usage-graph>-->

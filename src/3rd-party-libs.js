@@ -23,6 +23,7 @@ angular.module('3rd-party-libs', []).factory('d3', function ($window) {
             $.parentWidth = function () {return $element.parent().prop('clientWidth');};
             $.height = function () {return d3Svg.attr('height');};
             $.linearTransition = d3Svg.linearTransition.bind(d3Svg);
+            $.on = d3Svg.on.bind(d3Svg);
             return $;
         }
     };
