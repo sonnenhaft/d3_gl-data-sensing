@@ -1,10 +1,10 @@
 angular.module('live-chart', [
-    '3rd-party-libs'
+    '3rd-party-libs', 'chart-tooltip'
 ]).directive('liveChart', function (d3, $window, $interval, d3WrapperService) {
-    var STACK_SIZE = 150;
+    var STACK_SIZE = 30;
     var DEFAULT_DATA = [];
     for (var i = 0; i < 25; i++) {
-        DEFAULT_DATA.push({x: i, y: Math.random() * 350});
+        DEFAULT_DATA.push({x: i, y: Math.round(Math.random() * 350)});
     }
     var DURATION = 500;
     var RIGHT_PADDING = 12;
@@ -12,12 +12,32 @@ angular.module('live-chart', [
 
     var id = 0;
 
+    function getClosestDot(mouseX, data, xFn, yFn) {
+        var minDistance = Number.MAX_VALUE;
+        var dot = {x: 0, y: 0};
+        var dataDot = data[0];
+        data.forEach(function (item, index) {
+            var dotX = xFn(null, index);
+            var distance = Math.abs(dotX - mouseX);
+            if (minDistance > distance) {
+                minDistance = distance;
+                dot = {x: dotX, y: yFn(item.y)};
+                dataDot = item;
+            }
+        });
+        return [dot, dataDot];
+    }
+
     return {
         transclude: true,
         scope: {values: '=?'},
         templateUrl: 'src/live-chart/live-chart.html',
         link: function ($scope, $element) {
+            var lastMouseX;
+
             var $ = d3WrapperService.wrap($element);
+            var xAxis = d3.svg.axis().ticks(10).tickPadding(8);
+            var yAxis = d3.svg.axis().ticks(6).orient('left').tickPadding(8);
 
             $scope.id = id++;
 
@@ -35,7 +55,7 @@ angular.module('live-chart', [
             $scope.LEFT_PADDING = RIGHT_PADDING * 3;
             $scope.PADDING_TOP = 18;
 
-            var height = $.height()  - $scope.PADDING_TOP - PADDING_BOTTOM;
+            var height = $.height() - $scope.PADDING_TOP - PADDING_BOTTOM;
             $scope.height = height;
             var interval;
 
@@ -55,9 +75,9 @@ angular.module('live-chart', [
                     return d3.scale.linear().domain([d3.max(values) * 1.2, 0]).range([0, height]);
                 }
 
-                var xAxis = d3.svg.axis().ticks(10).tickSize(-height, 0).tickPadding(8);
-                var yAxis = d3.svg.axis().ticks(6).orient('left').tickSize(-width, 0, 0).tickPadding(8);
-                var areaFn = d3.svg.area().y0(height).interpolate('basis');
+                xAxis.tickSize(-height, 0);
+                yAxis.tickSize(-width, 0, 0);
+                var areaFn = d3.svg.area().y0(height)//.interpolate('basis');
                 if (interval) {
                     $interval.cancel(interval);
                 }
@@ -65,8 +85,7 @@ angular.module('live-chart', [
 
                 function renderLiveChart(disableAnimation) {
                     data.push({y: Math.round(Math.random() * 400), x: data[data.length - 1].x + 1});
-                    console.log(data[data.length - 1])
-                    $.linearTransition(disableAnimation ? 0 :DURATION, function () {
+                    $.linearTransition(disableAnimation ? 0 : DURATION, function () {
                         var toStack = STACK_SIZE < data.length;
                         var length = toStack ? STACK_SIZE : data.length;
 
@@ -74,8 +93,25 @@ angular.module('live-chart', [
 
                         var values = data.map(function (i) {return i.y;});
                         var y = yScaleGen(values);
-                        $('g.x-axis').transition().call(xAxis.scale(xScaleGen(toStack)));
+                        var xScale = xScaleGen(toStack);
+                        $('g.x-axis').transition().call(xAxis.scale(xScale));
                         $('g.y-axis').transition().call(yAxis.scale(y));
+
+                        function mouseMove(lastMouseX) {
+                            $scope.closestDot = getClosestDot(lastMouseX, data, x, y);
+                        }
+
+                        $('.mouse-over-area').on("mousemove", function () {
+                            lastMouseX = d3.mouse(this)[0];
+                            mouseMove(lastMouseX);
+                            $scope.$digest();
+                            mouseMove(lastMouseX);
+                        }).on('mouseleave', function () {
+                            lastMouseX = false;
+                            $scope.closestDot = null;
+                            $scope.$digest();
+                        });
+
                         var dArea = areaFn.x(x).y1(y);
                         var transparentArea = $('path.transparent-area');
                         if (toStack) {
@@ -87,6 +123,9 @@ angular.module('live-chart', [
                         } else {
                             values.push(0);
                             transparentArea.transition().attr('d', dArea(values));
+                        }
+                        if (lastMouseX) {
+                            mouseMove(lastMouseX);
                         }
                     });
                 }

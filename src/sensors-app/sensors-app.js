@@ -26,17 +26,6 @@ angular.module('sensors-app', [
         'JUN 31': 190,
         'JUN 32': 190,
         'JUN 33': 190,
-        'JUN 34': 190,
-        'JUN 3d4': 190,
-        'JUN 3dv4': 190,
-        'JUN 3dvs4': 190,
-        'JUN 3dvss4': 190,
-        'JUN 3dvssa4': 190,
-        'JUN 3dvssas4': 190,
-        'JUN 3dvssase4': 190,
-        'JUN 3dvssasew4': 190,
-        'JUN 3dvssasewq4': 190,
-        'JUN 3dvssasewqq4': 190,
         'JUL 5': 100
     };
 

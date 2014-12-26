@@ -8,8 +8,9 @@ angular.module('area-chart', [
         scope: {values: '=?', axisOutline: '=?'},
         templateUrl: 'src/area-chart/area-chart.html',
         link: function ($scope, $element) {
-            var $ = d3WrapperService.wrap($element);
             var isOutlineAxis = !$scope.axisOutline;
+            var $ = d3WrapperService.wrap($element);
+
 
             $scope.$watch('values', function (data) {
                 paintChart(data, $.parentWidth());
