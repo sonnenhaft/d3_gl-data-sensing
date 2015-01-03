@@ -1,7 +1,7 @@
 angular.module('live-chart', [
     '3rd-party-libs', 'chart-tooltip'
 ]).directive('liveChart', function (d3, $window, $interval, d3WrapperService) {
-    var STACK_SIZE = 30;
+    var STACK_SIZE = 300;
     var DEFAULT_DATA = [];
     for (var i = 0; i < 25; i++) {
         DEFAULT_DATA.push({x: i, y: Math.round(Math.random() * 350)});
