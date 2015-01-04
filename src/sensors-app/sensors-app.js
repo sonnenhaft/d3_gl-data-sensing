@@ -7,5 +7,6 @@ angular.module('sensors-app', [
     'header',
     'app-version',
     'ui.router',
-    'dev-menu'
+    'dev-menu',
+    'target-logo'
 ]);

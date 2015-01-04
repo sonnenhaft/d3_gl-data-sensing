@@ -1,0 +1,12 @@
+<svg width="100" height="86" version="1.0" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(43,43)">
+        <circle r="38" fill="none" stroke="white" stroke-width="3"/>
+        <circle r="10" fill="white" cy="-20"></circle>
+        <g transform="translate(-21,25) scale(0.1,-0.1)"
+           fill="white" stroke="none">
+            <path d="M65 318 c-40 -23 -44 -40 -45 -160 l0 -118 196 0 196 0 -4 126 c-3
+118 -4 127 -27 145 -14 11 -39 19 -61 19 -36 0 -41 -3 -70 -55 -17 -30 -33
+-55 -35 -55 -2 0 -18 25 -35 55 -28 49 -35 55 -63 55 -18 0 -41 -6 -52 -12z"/>
+        </g>
+    </g>
+</svg>

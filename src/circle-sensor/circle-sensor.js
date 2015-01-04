@@ -31,9 +31,14 @@ angular.module('circle-sensor', [
 
     return {
         transclude: true,
-        scope: {angle: '=?', label: '@', time: '@'},
+        scope: {angle: '=?', label: '@', time: '@', scale: '@'},
         templateUrl: 'src/circle-sensor/circle-sensor.html',
         link: function ($scope, $element) {
+            if ($scope.scale) {
+                $scope.scale = parseInt($scope.scale);
+            } else {
+                $scope.scale = 1;
+            }
             var d3svg = d3.selectAll($element).select('svg');
             var $ = d3svg.select.bind(d3svg);
 
