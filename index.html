@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="src/live-chart/live-chart.css"/>
         <link rel="stylesheet" href="src/gl-header/gl-header.css"/>
         <link rel="stylesheet" href="src/login-page/login-page.css"/>
+        <link rel="stylesheet" href="src/app-version/app-version.css"/>
     <!-- endbuild -->
     <!-- build:js app.js -->
         <script src="src/sensors-app/sensors-app.js"></script>
@@ -31,11 +32,10 @@
         <script src="src/gl-header/gl-header.js"></script>
         <script src="src/chart-background/chart-background.js"></script>
         <script src="src/volume-usage-graph/volume-usage-graph.js"></script>
+        <script src="src/app-version/app-version.js"></script>
         <!-- inject:.tmp/templates:js --><!-- endinject -->
+        <!-- inject:.tmp/package:js --><!-- endinject -->
     <!-- endbuild -->
-    <!-- process:remove -->
-        <script src="src/dev-version.js"></script>
-    <!-- /process -->
 </head>
 <body>
 <div class="container-fluid">
@@ -43,15 +43,10 @@
     <div ng-include="'src/login-page/login-page.html'"></div>
     <div class="row">
         <div ng-include="'src/sensors-app/sensors-app.html'"></div>
-        <div class="version">
-            GL Data Sensors
-            <dev-version></dev-version>
-            <!-- process:template
-             v<%= version %>
-            /process -->
-        </div>
+        <app-version></app-version>
     </div>
 </div>
+
 
 <!-- build:css base64-images.css -->
     <link rel="stylesheet" href="src/login-page/login-page-img.css"/>
