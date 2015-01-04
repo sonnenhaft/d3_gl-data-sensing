@@ -5,7 +5,8 @@ angular.module('sensors-app', [
     'volume-usage-graph',
     'live-chart',
     'header',
-    'app-version'
+    'app-version',
+    'ui.router'
 ]).run(function ($rootScope) {
     var sensors = [
         {time: '4:30AM', angle: 0, label: ''},
@@ -35,7 +36,7 @@ angular.module('sensors-app', [
         'JUL 5': 100
     };
 
-    $rootScope.valuesVolume = [100,99,98,97,96,95,94,93,92,91,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10,5,3];
+    $rootScope.valuesVolume = [100, 99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 3];
 
     $rootScope.sensors = sensors;
     $rootScope.areaChart = areaChart;
@@ -49,8 +50,8 @@ angular.module('sensors-app', [
             areaChart[key] = Math.round(Math.random() * 10) * 40;
         });
     };
-    $rootScope.changeValues = function(){
-        $rootScope.valuesVolume = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+    $rootScope.changeValues = function () {
+        $rootScope.valuesVolume = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
     };
     $rootScope.randomizeArea();
 });
