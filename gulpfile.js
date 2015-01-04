@@ -12,6 +12,8 @@ gulp.task('usemin', ['html', 'compile-less'], function () {
     var processhtml = require('gulp-processhtml');
 
     var pkg = require('./package.json');
+
+    var cssBase64 = require('gulp-css-base64');
     return gulp.src('index.html')
         .pipe(inject(gulp.src('.tmp/templates.js', {read: false}),
             {starttag: '<!-- inject:.tmp/templates:js -->'}
@@ -22,7 +24,7 @@ gulp.task('usemin', ['html', 'compile-less'], function () {
                 process: true,
                 data: { version: pkg.version}
             }), minifyHtml()],
-            css: [minifyCss(), 'concat', rev()],
+            css: [cssBase64({maxWeightResource: 10000000}), 'concat', rev()],
             js: [ngAnnotate(), uglify(), rev()]
             //js: [sourcemaps.init(), ngAnnotate(), uglify(), rev(), sourcemaps.write('./maps')]
         }))
@@ -82,7 +84,6 @@ gulp.task('watch', function () {
             .pipe(gulp.dest(folder));
     });
 });
-
 
 gulp.task('jshint', function() {
     var jshint = require('gulp-jshint');
