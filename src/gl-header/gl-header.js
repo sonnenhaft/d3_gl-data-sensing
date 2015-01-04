@@ -1,6 +1,12 @@
 angular.module('header', [
-]).directive('header', function () {
+    'ui.router'
+]).directive('header', function ($rootScope, $window) {
     return {
-        templateUrl: 'src/gl-header/gl-header.html'
+        templateUrl: 'src/gl-header/gl-header.html',
+        link: function($scope){
+            $scope.goBack = function(){
+                $window.history.back();
+            }
+        }
     };
 });

@@ -1,9 +1,10 @@
 {
   "name": "sensors",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "angular": "~1.3.8",
     "d3": "~3.5.2",
-    "bootstrap": "~3.3.1"
+    "bootstrap": "~3.3.1",
+    "angular-ui-router": "~0.2.13"
   }
 }

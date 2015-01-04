@@ -6,10 +6,12 @@
     <!-- process:remove -->
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <!-- /process -->
     <!-- process:template
          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
     /process -->
@@ -24,6 +26,7 @@
     <!-- endbuild -->
     <!-- build:js app.js -->
         <script src="src/sensors-app/sensors-app.js"></script>
+        <script src="src/sensors-app/routes-config.js"></script>
         <script src="src/3rd-party-libs.js"></script>
         <script src="src/circle-sensor/circle-sensor.js"></script>
         <script src="src/live-chart/live-chart.js"></script>
@@ -40,11 +43,8 @@
 <body>
 <div class="container-fluid">
     <header></header>
-    <div ng-include="'src/login-page/login-page.html'"></div>
-    <div class="row">
-        <div ng-include="'src/sensors-app/sensors-app.html'"></div>
-        <app-version></app-version>
-    </div>
+    <div ui-view></div>
+    <app-version></app-version>
 </div>
 
 
