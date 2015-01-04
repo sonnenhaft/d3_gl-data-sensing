@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 
+var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
+var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 gulp.task('usemin', ['ng-templates', 'app-version', 'compile-less'], function () {
     var usemin = require('gulp-usemin');
     var uglify = require('gulp-uglify');
@@ -25,11 +28,10 @@ gulp.task('usemin', ['ng-templates', 'app-version', 'compile-less'], function ()
             html: [processhtml({
                 commentMarker: 'process',
                 process: true,
-                data: { version: pkg.version}
+                data: {version: pkg.version}
             }), minifyHtml()],
-            css: [cssBase64({maxWeightResource: 10000000}), 'concat', rev()],
-            js: [ngAnnotate(), rev()]
-            //js: [sourcemaps.init(), ngAnnotate(), uglify(), rev(), sourcemaps.write('./maps')]
+            css: [cssBase64({maxWeightResource: 10000000}), minifyCss(), 'concat', rev()],
+            js: [sourcemaps.init(), ngAnnotate(), uglify(), rev(), sourcemaps.write('.')]
         }))
         .pipe(gulp.dest('build/'));
 });
@@ -48,7 +50,7 @@ gulp.task('app-version', function () {
     var gulpNgConfig = require('gulp-ng-config');
     gulp.src('package.json')
         .pipe(gulpNgConfig('package-json'))
-        .pipe(gulp.dest('.tmp/'))
+        .pipe(gulp.dest('.tmp/'));
 });
 
 var clean = require('gulp-clean');
@@ -60,9 +62,6 @@ gulp.task('remove .tmp', ['usemin'], function () {
     return gulp.src('.tmp').pipe(clean());
 });
 
-var less = require('gulp-less');
-var LessPluginAutoPrefix = require('less-plugin-autoprefix');
-var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 gulp.task('less', ['clean-less'], function () {
     return gulp.src('src/**/*.less')
         //.pipe(sourcemaps.init())
@@ -85,7 +84,7 @@ gulp.task('watch', function () {
         if (path.indexOf('less') === -1 || file.type !== 'changed') {
             return;
         }
-        console.log('changed: ' + path);
+        console.log('changed: ' + path); // jshint ignore:line
         var folder = path.slice(0, path.lastIndexOf('\\'));
         gulp.src(path)
             //.pipe(sourcemaps.init())
@@ -95,7 +94,7 @@ gulp.task('watch', function () {
     });
 });
 
-gulp.task('jshint', function() {
+gulp.task('jshint', function () {
     var jshint = require('gulp-jshint');
     return gulp.src(['src/**/*.js', 'gulpfile.js'])
         .pipe(jshint())
@@ -105,10 +104,10 @@ gulp.task('jshint', function() {
 gulp.task('compile-less', ['clean-less', 'less']);
 gulp.task('build', ['clean', 'compile-less', 'ng-templates', 'app-version', 'usemin', 'remove .tmp']);
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
     return require('gulp-connect').server({
-        middleware: function() {
-            return [ (function() {
+        middleware: function () {
+            return [(function () {
                 var url = require('url');
                 var proxy = require('proxy-middleware');
                 var options = url.parse('http://localhost:8088/api');

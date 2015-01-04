@@ -11,7 +11,7 @@
     <!-- /process -->
     <!-- process:template
          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
     /process -->
@@ -23,9 +23,11 @@
         <link rel="stylesheet" href="src/gl-header/gl-header.css"/>
         <link rel="stylesheet" href="src/login-page/login-page.css"/>
         <link rel="stylesheet" href="src/app-version/app-version.css"/>
+        <link rel="stylesheet" href="src/dev-menu/dev-menu.css"/>
     <!-- endbuild -->
     <!-- build:js app.js -->
         <script src="src/sensors-app/sensors-app.js"></script>
+        <script src="src/sensors-app/charts-stub-data.js"></script>
         <script src="src/sensors-app/routes-config.js"></script>
         <script src="src/3rd-party-libs.js"></script>
         <script src="src/circle-sensor/circle-sensor.js"></script>
@@ -36,6 +38,7 @@
         <script src="src/chart-background/chart-background.js"></script>
         <script src="src/volume-usage-graph/volume-usage-graph.js"></script>
         <script src="src/app-version/app-version.js"></script>
+        <script src="src/dev-menu/dev-menu.js"></script>
         <!-- inject:.tmp/templates:js --><!-- endinject -->
         <!-- inject:.tmp/package:js --><!-- endinject -->
     <!-- endbuild -->
@@ -43,7 +46,9 @@
 <body>
 <div class="container-fluid">
     <header></header>
-    <div ui-view></div>
+    <dev-menu></dev-menu>
+    <!--<div ng-include="'src/login-page/login-page.html'"></div>-->
+    <ui-view></ui-view>
     <app-version></app-version>
 </div>
 

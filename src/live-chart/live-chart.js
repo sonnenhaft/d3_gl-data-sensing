@@ -77,7 +77,7 @@ angular.module('live-chart', [
 
                 xAxis.tickSize(-height, 0);
                 yAxis.tickSize(-width, 0, 0);
-                var areaFn = d3.svg.area().y0(height)//.interpolate('basis');
+                var areaFn = d3.svg.area().y0(height);//.interpolate('basis');
                 if (interval) {
                     $interval.cancel(interval);
                 }
@@ -101,7 +101,7 @@ angular.module('live-chart', [
                             $scope.closestDot = getClosestDot(lastMouseX, data, x, y);
                         }
 
-                        $('.mouse-over-area').on("mousemove", function () {
+                        $('.mouse-over-area').on('mousemove', function () {
                             lastMouseX = d3.mouse(this)[0];
                             mouseMove(lastMouseX);
                             $scope.$digest();
