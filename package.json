@@ -1,6 +1,6 @@
 {
   "name": "gl-data-sensors",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "GL DataSensors",
   "main": "gulpfile.js",
   "dependencies": {
