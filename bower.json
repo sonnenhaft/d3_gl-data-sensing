@@ -1,5 +1,5 @@
 {
-  "name": "sensors",
+  "name": "gl-data-sensors",
   "private": true,
   "devDependencies": {
     "angular": "~1.3.8",
