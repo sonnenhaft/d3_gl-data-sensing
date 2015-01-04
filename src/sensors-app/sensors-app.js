@@ -1,5 +1,5 @@
 angular.module('sensors-app', [
-    'circle-sensor', 'area-chart', 'chart-background', 'volume-usage-graph','live-chart'
+    'circle-sensor', 'area-chart', 'chart-background', 'volume-usage-graph','live-chart', 'header'
 ]).run(function ($rootScope) {
     var sensors = [
         {time: '4:30AM', angle: 0, label: ''},
