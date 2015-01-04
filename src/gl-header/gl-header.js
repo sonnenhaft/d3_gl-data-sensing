@@ -6,7 +6,7 @@ angular.module('header', [
         link: function($scope){
             $scope.goBack = function(){
                 $window.history.back();
-            }
+            };
         }
     };
 });
