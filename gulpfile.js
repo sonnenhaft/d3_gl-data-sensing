@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 
 var sourcemaps = require('gulp-sourcemaps');
-gulp.task('usemin', ['html', 'compile-less'], function () {
+gulp.task('usemin', ['ng-templates', 'app-version', 'compile-less'], function () {
     var usemin = require('gulp-usemin');
     var uglify = require('gulp-uglify');
     var minifyHtml = require('gulp-minify-html');
@@ -18,6 +18,9 @@ gulp.task('usemin', ['html', 'compile-less'], function () {
         .pipe(inject(gulp.src('.tmp/templates.js', {read: false}),
             {starttag: '<!-- inject:.tmp/templates:js -->'}
         ))
+        .pipe(inject(gulp.src('.tmp/package.js', {read: false}),
+            {starttag: '<!-- inject:.tmp/package:js -->'}
+        ))
         .pipe(usemin({
             html: [processhtml({
                 commentMarker: 'process',
@@ -25,13 +28,13 @@ gulp.task('usemin', ['html', 'compile-less'], function () {
                 data: { version: pkg.version}
             }), minifyHtml()],
             css: [cssBase64({maxWeightResource: 10000000}), 'concat', rev()],
-            js: [ngAnnotate(), uglify(), rev()]
+            js: [ngAnnotate(), rev()]
             //js: [sourcemaps.init(), ngAnnotate(), uglify(), rev(), sourcemaps.write('./maps')]
         }))
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('html', ['clean'], function () {
+gulp.task('ng-templates', ['clean'], function () {
     var templateCache = require('gulp-angular-templatecache');
     return gulp.src('src/**/*.html')
         .pipe(templateCache({
@@ -39,6 +42,13 @@ gulp.task('html', ['clean'], function () {
             module: 'sensors-app'
         }))
         .pipe(gulp.dest('.tmp'));
+});
+
+gulp.task('app-version', function () {
+    var gulpNgConfig = require('gulp-ng-config');
+    gulp.src('package.json')
+        .pipe(gulpNgConfig('package-json'))
+        .pipe(gulp.dest('.tmp/'))
 });
 
 var clean = require('gulp-clean');
@@ -93,7 +103,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('compile-less', ['clean-less', 'less']);
-gulp.task('build', ['clean', 'compile-less', 'html', 'usemin', 'remove .tmp']);
+gulp.task('build', ['clean', 'compile-less', 'ng-templates', 'app-version', 'usemin', 'remove .tmp']);
 
 gulp.task('connect', function() {
     return require('gulp-connect').server({
@@ -104,7 +114,7 @@ gulp.task('connect', function() {
                 var options = url.parse('http://localhost:8088/api');
                 options.route = '/api';
                 return proxy(options);
-            })() ];
+            })()];
         }
     });
 });

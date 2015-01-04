@@ -1,6 +1,6 @@
 {
   "name": "gl-data-sensors",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "GL DataSensors",
   "main": "gulpfile.js",
   "dependencies": {
@@ -42,5 +42,8 @@
     "d3",
     "AngularJS",
     "Sensors"
-  ]
+  ],
+  "devDependencies": {
+    "gulp-ng-config": "~1.0.0"
+  }
 }
