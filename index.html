@@ -37,13 +37,12 @@
         <script src="src/dev-version.js"></script>
     <!-- /process -->
 </head>
-<body style="    background-image: url('/src/login-page/login-background.png');
-    background-size: cover; height: 100%">
+<body>
 <div class="container-fluid">
     <header></header>
     <div ng-include="'src/login-page/login-page.html'"></div>
     <div class="row">
-        <!--<div ng-include="'src/sensors-app/sensors-app.html'"></div>-->
+        <div ng-include="'src/sensors-app/sensors-app.html'"></div>
         <div class="version">
             GL Data Sensors
             <dev-version></dev-version>
@@ -54,5 +53,9 @@
     </div>
 </div>
 
+<!-- build:css base64-images.css -->
+    <link rel="stylesheet" href="src/login-page/login-page-img.css"/>
+    <link rel="stylesheet" href="src/gl-header/gl-header-img.css"/>
+<!-- endbuild -->
 </body>
 </html>
