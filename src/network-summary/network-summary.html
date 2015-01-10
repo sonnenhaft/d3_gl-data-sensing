@@ -1,27 +1,13 @@
 <div class="network-summary row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
         <div class="row">
             <div class="col-xs-2 text-left">
                 <target-logo></target-logo>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" style="background: rgba(24, 161, 210, 0.65)">
-                <div class="col-md-4">
-                    <div class="col-md-12"></div>
-                    <div class="col-md-12">TOTAL CUSTOMERS</div>
-                </div>
-                <div class="col-md-4">
-                    <circle-sensor angle="45"  time="4pm"></circle-sensor>
-                </div>
-                <div class="col-md-4">
-                    <div class="col-md-12">TOTAL TRANSACTIONS</div>
-                    <div class="col-md-12"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12"><br/></div>
-        </div>
+
+        <div ng-include="'src/network-summary/network-summary-block/network-summary-block.html'"></div>
+        <div ng-include="'src/network-summary/find-location/find-location.html'"></div>
+        <div ng-include="'src/network-summary/weather-data/weather-data.html'"></div>
     </div>
 </div>
