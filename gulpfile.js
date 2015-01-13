@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var livereload = require('gulp-livereload');
 
 var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
@@ -67,22 +66,6 @@ gulp.task('clean-less', function () {
     ]).pipe(clean());
 });
 
-gulp.task('watch', function () {
-    livereload.listen();
-    gulp.watch(['src/**/*.js', 'src/**/*.html', 'index.html'], function (file) {
-        console.log('script changed: ' +  file.path); // jshint ignore:line
-        gulp.src(file.path).pipe(livereload());
-    });
-    gulp.watch('src/**/*.less', function (file) {
-        if (file.type === 'changed') {
-            var path = file.path;
-            console.log('changed: ' + path); // jshint ignore:line
-            var folder = path.slice(0, path.lastIndexOf('\\'));
-            compileLess(path, folder);
-        }
-    });
-}).on('change', livereload.changed);
-
 function compileLess(src, dest) {
     return gulp.src(src)
         //.pipe(sourcemaps.init())
@@ -115,4 +98,23 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('dev-server', ['connect', 'watch']);
+(function(livereload){
+    gulp.task('watch', function () {
+        livereload.listen();
+        gulp.watch(['src/**/*.js', 'src/**/*.html', 'index.html'], function (file) {
+            console.log('script changed: ' +  file.path); // jshint ignore:line
+            gulp.src(file.path).pipe(livereload());
+        });
+        gulp.watch('src/**/*.less', function (file) {
+            if (file.type === 'changed') {
+                var path = file.path;
+                console.log('changed: ' + path); // jshint ignore:line
+                var folder = path.slice(0, path.lastIndexOf('\\'));
+                compileLess(path, folder);
+            }
+        });
+    }).on('change', livereload.changed);
+})(require('gulp-livereload'));
+
+gulp.task('server-with-less', ['connect', 'watch', 'less']);
+gulp.task('default', ['connect', 'watch']);

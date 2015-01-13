@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="255" height="49">
+	<g transform="translate(2,4)">
+		<g transform="translate(20,20)">
+			<circle r="18" fill="none" stroke="#D81522" stroke-width="8"></circle>
+			<circle r="8" fill="#D81522"></circle>
+			<text font-size="50" font-weight="bold" dx="20" dy="16">TARGET</text>
+			<text font-size="12" font-weight="bold" dx="220" dy="16">®</text>
+		</g>
+	</g>
+</svg>
