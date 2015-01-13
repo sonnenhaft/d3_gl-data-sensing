@@ -1,7 +1,8 @@
 {
   "name": "gl-data-sensors",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "GL DataSensors",
+  "ngAppName": "sensors-app",
   "main": "gulpfile.js",
   "dependencies": {
     "gulp": "~3.8.10",
@@ -44,6 +45,7 @@
     "Sensors"
   ],
   "devDependencies": {
-    "gulp-ng-config": "~1.0.0"
+    "gulp-ng-config": "~1.0.0",
+    "gulp-livereload": "~3.2.0"
   }
 }
