@@ -1,5 +1,5 @@
 angular.module('graph.volume-usage-graph', [
-    '3rd-party-libs'
+    'graph.d3-wrapper'
 ]).directive('volumeUsageGraph', function (d3, $window) {
     var id = 0;
     return {

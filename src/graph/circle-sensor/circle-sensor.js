@@ -1,5 +1,5 @@
 angular.module('graph.circle-sensor', [
-    '3rd-party-libs'
+    'graph.d3-wrapper'
 ]).directive('circleSensor', function (d3) {
     var DEFAULT_ARC_ANGLE = Math.PI / 2;
     var OUTER_RADIUS = 50;

@@ -1,4 +1,5 @@
-angular.module('3rd-party-libs', []).factory('d3', function ($window) {
+angular.module('graph.d3-wrapper', [
+]).factory('d3', function ($window) {
     var d3 = $window.d3;
     d3.selection.prototype.drtEnter = function (data, tag, defaultAttrs) {
         var lines = this.selectAll(tag).data(data);

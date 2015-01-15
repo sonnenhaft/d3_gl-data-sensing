@@ -40,7 +40,7 @@ gulp.task('ng-templates&app-version', ['clean'], function () {
     return gulp.src('src/**/*.html')
         .pipe(templateCache({
             root: 'src/',
-            module: pkg.ngAppName
+            module: pkg.name
         }))
         .pipe(gulp.dest('.tmp'));
 });

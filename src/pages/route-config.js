@@ -2,7 +2,7 @@ angular.module('pages.route-config', ['ui.router']).config(function ($stateProvi
     $urlRouterProvider.otherwise('/sensors');
     $stateProvider.state('sensors', {
         url: '/sensors',
-        templateUrl: 'src/sensors-app/sensors-app.html'
+        templateUrl: 'src/pages/sensors-page/sensors-page.html'
     }).state('network-summary', {
         url: '/network-summary',
         templateUrl: 'src/pages/network-summary/network-summary.html'

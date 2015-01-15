@@ -1,5 +1,5 @@
 angular.module('graph.live-chart', [
-    '3rd-party-libs', 'graph.chart-tooltip'
+    'graph.d3-wrapper', 'graph.chart-tooltip'
 ]).directive('liveChart', function (d3, $window, $interval, d3WrapperService) {
     var STACK_SIZE = 300;
     var DEFAULT_DATA = [];

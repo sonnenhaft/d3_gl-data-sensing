@@ -1,5 +1,5 @@
 angular.module('graph.area-chart', [
-    '3rd-party-libs'
+    'graph.d3-wrapper'
 ]).directive('areaChart', function (d3, $window, d3WrapperService) {
     var PADDING_BOTTOM = 25;
 
