@@ -1,5 +1,5 @@
 angular.module('graph.chart-tooltip', [
-    '3rd-party-libs'
+    'graph.d3-wrapper'
 ]).directive('chartTooltip', function(d3){
     var DURATION = 500;
     return {

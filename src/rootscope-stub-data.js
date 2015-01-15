@@ -1,4 +1,4 @@
-angular.module('sensors-app').run(function ($rootScope) {
+angular.module('gl-data-sensors').run(function ($rootScope) {
     var sensors = [
         {time: '4:30AM', angle: 0, label: ''},
         {time: '7:30PM', angle: 45, label: 'Peak Usage'},

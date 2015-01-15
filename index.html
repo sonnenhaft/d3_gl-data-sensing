@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html ng-app="sensors-app">
+<html ng-app="gl-data-sensors">
 <head lang="en">
     <meta charset="UTF-8">
     <title>sensor</title>
@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
     /process -->
     <!-- build:css styles.css -->
-        <link rel="stylesheet" href="src/sensors-app/sensors-app.css"/>
+        <link rel="stylesheet" href="src/base.css"/>
         <link rel="stylesheet" href="src/graph/circle-sensor/circle-sensor.css"/>
         <link rel="stylesheet" href="src/graph/area-chart/area-chart.css"/>
         <link rel="stylesheet" href="src/graph/live-chart/live-chart.css"/>
@@ -33,10 +33,11 @@
         <link rel="stylesheet" href="src/components/dev-menu/dev-menu.css"/>
     <!-- endbuild -->
     <!-- build:js app.js -->
-        <script src="src/sensors-app/sensors-app.js"></script>
-        <script src="src/sensors-app/charts-stub-data.js"></script>
+        <script src="src/app.js"></script>
+        <script src="src/rootscope-stub-data.js"></script>
         <script src="src/pages/route-config.js"></script>
         <script src="src/graph/live-chart/live-chart.js"></script>
+        <script src="src/graph/single-bar/single-bar.js"></script>
         <script src="src/graph/circle-sensor/circle-sensor.js"></script>
         <script src="src/graph/chart-tooltip/chart-tooltip.js"></script>
         <script src="src/graph/area-chart/area-chart.js"></script>
@@ -49,7 +50,7 @@
         <script src="src/components/network-summary-block/network-summary-block.js"></script>
         <script src="src/components/find-location/find-location.js"></script>
         <script src="src/components/weather-data/weather-data.js"></script>
-        <script src="src/3rd-party-libs.js"></script>
+        <script src="src/graph/d3-wrapper.js"></script>
         <!-- inject:.tmp/templates-and-app-version:js --><!-- endinject -->
     <!-- endbuild -->
 </head>
