@@ -1,19 +1,25 @@
 var gulp = require('gulp');
 
-var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
-var LessPluginAutoPrefix = require('less-plugin-autoprefix');
-var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
+var pkg = require('./package.json');
+
 gulp.task('usemin', ['ng-templates&app-version', 'compile-less'], function () {
     var usemin = require('gulp-usemin');
     var uglify = require('gulp-uglify');
     var minifyHtml = require('gulp-minify-html');
     var minifyCss = require('gulp-minify-css');
-    var rev = require('gulp-rev');
     var ngAnnotate = require('gulp-ng-annotate');
     var inject = require('gulp-inject');
     var processhtml = require('gulp-processhtml');
     var cssBase64 = require('gulp-css-base64');
+    var urlAdjuster = require('gulp-css-url-adjuster');
+    var ver = require('gulp-ver');
+    //var staticAssetsDir = 'static-assets-v' + pkg.version + '/';
+    var staticAssetsDir = 'static-assets/';
+
+    var copy = require('gulp-copy');
+    gulp.src('src/**/*-background.png').pipe(copy('build/' + staticAssetsDir, {prefix: 10}));
+
     return gulp.src('index.html')
         .pipe(inject(gulp.src(['.tmp/templates.js', '.tmp/package.js'], {read: false}),
             {starttag: '<!-- inject:.tmp/templates-and-app-version:js -->'}
@@ -23,8 +29,9 @@ gulp.task('usemin', ['ng-templates&app-version', 'compile-less'], function () {
                 commentMarker: 'process',
                 process: true
             }), minifyHtml()],
-            css: [cssBase64({maxWeightResource: 10000000}), minifyCss(), 'concat', rev()],
-            js: [sourcemaps.init(), ngAnnotate(), uglify(), rev(), sourcemaps.write('.')]
+            css: [cssBase64({maxWeightResource: 200*1024}), 'concat', urlAdjuster({prepend: staticAssetsDir}), ver({prefix: 'v'}), minifyCss()],
+            //js: [sourcemaps.init(), ngAnnotate(), uglify(), ver({prefix: 'v'}), sourcemaps.write('.')]
+            js: [ngAnnotate(), uglify(), ver({prefix: 'v'})]
         }))
         .pipe(gulp.dest('build/'));
 });
@@ -36,7 +43,6 @@ gulp.task('ng-templates&app-version', ['clean'], function () {
         .pipe(gulp.dest('.tmp/'));
 
     var templateCache = require('gulp-angular-templatecache');
-    var pkg = require('./package.json');
     return gulp.src('src/**/*.html')
         .pipe(templateCache({
             root: 'src/',
@@ -66,6 +72,9 @@ gulp.task('clean-less', function () {
     ]).pipe(clean());
 });
 
+var less = require('gulp-less');
+var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 function compileLess(src, dest) {
     return gulp.src(src)
         //.pipe(sourcemaps.init())

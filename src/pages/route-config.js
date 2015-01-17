@@ -1,5 +1,5 @@
 angular.module('pages.route-config', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/sensors');
+    $urlRouterProvider.otherwise('/network-summary');
     $stateProvider.state('sensors', {
         url: '/sensors',
         templateUrl: 'src/pages/sensors-page/sensors-page.html'
