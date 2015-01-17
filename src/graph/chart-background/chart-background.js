@@ -1,6 +1,6 @@
 angular.module('graph.chart-background', [
     'graph.area-chart'
-]).directive('graph.chartBackground', function () {
+]).directive('chartBackground', function () {
     return {
         transclude: true,
         scope: {values: '=?', axisOutline: '=?'},
