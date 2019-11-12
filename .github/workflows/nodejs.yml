@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 8.x
       - name: Install Dependencies
-        run: npm ci && npm bower-install
+        run: npm ci && npm run bower-install
         env:
           CI: true
       - name: Build
