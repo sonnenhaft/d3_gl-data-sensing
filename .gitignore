@@ -8,6 +8,4 @@ bower_components
 ## files
 *.log
 *.css
-.idea
-bower_components
 npm-debug.log

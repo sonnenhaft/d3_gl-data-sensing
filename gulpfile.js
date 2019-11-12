@@ -1,12 +1,12 @@
 var gulp = require('gulp');
 
-var sourcemaps = require('gulp-sourcemaps');
+// var sourcemaps = require('gulp-sourcemaps');
 var pkg = require('./package.json');
 
 gulp.task('usemin', ['ng-templates&app-version', 'compile-less'], function () {
     var usemin = require('gulp-usemin');
     var uglify = require('gulp-uglify');
-    var minifyHtml = require('gulp-minify-html');
+    // var minifyHtml = require('gulp-minify-html');
     var minifyCss = require('gulp-minify-css');
     var ngAnnotate = require('gulp-ng-annotate');
     var inject = require('gulp-inject');
@@ -28,7 +28,7 @@ gulp.task('usemin', ['ng-templates&app-version', 'compile-less'], function () {
             html: [processhtml({
                 commentMarker: 'process',
                 process: true
-            }), minifyHtml()],
+            })/*, minifyHtml()*/],
             css: [cssBase64({maxWeightResource: 200*1024}), 'concat', urlAdjuster({prepend: staticAssetsDir}), ver({prefix: 'v'}), minifyCss()],
             //js: [sourcemaps.init(), ngAnnotate(), uglify(), ver({prefix: 'v'}), sourcemaps.write('.')]
             js: [ngAnnotate(), uglify(), ver({prefix: 'v'})]
